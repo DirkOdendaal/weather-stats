@@ -1,0 +1,33 @@
+.weather-container {
+  list-style: none;
+}
+
+.detail-div {
+  border-left: 3px solid rgba(0, 136, 169, 1);
+}
+
+.weather-container-li {
+  display: flex;
+}
+
+.weather-container-li li {
+  list-style: none;
+  display: inline-block;
+  width: 100px;
+}
+
+ul {
+  text-align: left;
+}
+
+.location {
+  font-size: 40px;
+}
+
+.date {
+  color: rgba(0, 136, 169, 1);
+}
+
+.degree {
+  font-size: 35px;
+}
