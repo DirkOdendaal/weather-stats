@@ -1,5 +1,7 @@
 .weather-container {
   list-style: none;
+  max-width: 500px;
+  min-width: 500px;
 }
 
 .detail-div {

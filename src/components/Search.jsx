@@ -13,9 +13,8 @@ import {
   ComboboxOption,
 } from "@reach/combobox";
 import "@reach/combobox/styles.css";
-import updateMapLocation from "../js/Map";
 
-export default function Search() {
+export default function Search({ setLocationName, setLatLng }) {
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: "AIzaSyCPrLDWy7O8v0kS-r0y01REB1H10l332gQ",
     libraries: ["places"],
@@ -30,18 +29,21 @@ export default function Search() {
 
   return (
     <li>
-      <SearchAddress />
+      <SearchAddress setLocationName={setLocationName} setLatLng={setLatLng} />
     </li>
   );
 }
 
-function SearchAddress() {
-  const [selected, setSelected] = useState(null);
-
-  return <PlacesAutocomplete setSelected={setSelected} />;
+function SearchAddress({ setLocationName, setLatLng }) {
+  return (
+    <PlacesAutocomplete
+      setLocationName={setLocationName}
+      setLatLng={setLatLng}
+    />
+  );
 }
 
-const PlacesAutocomplete = ({ setSelected }) => {
+const PlacesAutocomplete = ({ setLocationName, setLatLng }) => {
   const {
     ready,
     value,
@@ -55,10 +57,9 @@ const PlacesAutocomplete = ({ setSelected }) => {
     clearSuggestions();
 
     const results = await getGeocode({ address });
-    console.log(results);
-    const { lat, lng } = await getLatLng(results[0]);
-    // setSelected({ lat, lng });
-    updateMapLocation(lat, lng);
+    // const { lat, lng } = await getLatLng(results[0]);
+    setLocationName(address);
+    setLatLng(await getLatLng(results[0]));
   };
 
   return (
