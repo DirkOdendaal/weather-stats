@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useLoadScript } from "@react-google-maps/api";
 import "../css/Search.css";
 import usePlacesAutocomplete, {
@@ -13,8 +12,14 @@ import {
   ComboboxOption,
 } from "@reach/combobox";
 import "@reach/combobox/styles.css";
+import $ from "jquery";
 
-export default function Search({ setLocationName, setLatLng }) {
+export default function Search({
+  setLocationName,
+  setLatLng,
+  setWeatherInfo,
+  locationName,
+}) {
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: "AIzaSyCPrLDWy7O8v0kS-r0y01REB1H10l332gQ",
     libraries: ["places"],
@@ -29,21 +34,38 @@ export default function Search({ setLocationName, setLatLng }) {
 
   return (
     <li>
-      <SearchAddress setLocationName={setLocationName} setLatLng={setLatLng} />
+      <SearchAddress
+        setLocationName={setLocationName}
+        setLatLng={setLatLng}
+        setWeatherInfo={setWeatherInfo}
+        locationName={locationName}
+      />
     </li>
   );
 }
 
-function SearchAddress({ setLocationName, setLatLng }) {
+function SearchAddress({
+  setLocationName,
+  setLatLng,
+  setWeatherInfo,
+  locationName,
+}) {
   return (
     <PlacesAutocomplete
       setLocationName={setLocationName}
       setLatLng={setLatLng}
+      setWeatherInfo={setWeatherInfo}
+      locationName={locationName}
     />
   );
 }
 
-const PlacesAutocomplete = ({ setLocationName, setLatLng }) => {
+const PlacesAutocomplete = ({
+  setLocationName,
+  setLatLng,
+  setWeatherInfo,
+  locationName,
+}) => {
   const {
     ready,
     value,
@@ -57,9 +79,10 @@ const PlacesAutocomplete = ({ setLocationName, setLatLng }) => {
     clearSuggestions();
 
     const results = await getGeocode({ address });
-    // const { lat, lng } = await getLatLng(results[0]);
+    console.log(address);
     setLocationName(address);
-    setLatLng(await getLatLng(results[0]));
+    setLatLng(getLatLng(results[0]));
+    getWeatherInfo({ locationName, setWeatherInfo });
   };
 
   return (
@@ -86,3 +109,16 @@ const PlacesAutocomplete = ({ setLocationName, setLatLng }) => {
     </Combobox>
   );
 };
+
+function getWeatherInfo({ locationName, setWeatherInfo }) {
+  if (locationName !== null || locationName !== undefined) {
+    $.ajax({
+      url: `https://api.weatherapi.com/v1/current.json?key=d6059cb8972940258c182934222908&q=${locationName}&aqi=no`,
+      type: "GET",
+      success: function (result) {
+        setWeatherInfo(result.current);
+        console.log(result.current);
+      },
+    });
+  }
+}

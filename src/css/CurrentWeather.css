@@ -15,7 +15,8 @@
 .weather-container-li li {
   list-style: none;
   display: inline-block;
-  width: 100px;
+  width: 150px;
+  padding: 8px
 }
 
 ul {
