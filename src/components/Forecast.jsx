@@ -5,32 +5,23 @@ export default function Forecast({ forecastInfo }) {
   if (forecastInfo.length === 0 && forecastInfo.forecastday !== undefined) {
     return <div>Loading..</div>;
   }
-
-  console.log(forecastInfo.forecastday);
+  console.log(forecastInfo);
   return (
-    <div className="forecast-container">
-      <ul className="record-list">
-        <li>
-          <div className="inline-records">
-            <div>Date</div>
-            <div>Max</div>
-            <div>Min</div>
-          </div>
-        </li>
-      </ul>
-      <ul className="record-list">
-        {forecastInfo.forecastday.map((info) => {
-          return (
-            <li key={info.date}>
-              <div className="inline-records">
-                <div>{info.date} °C</div>
-                <div>{info.day.maxtemp_c} °C</div>
-                <div>{info.day.mintemp_c} °C</div>
-              </div>
-            </li>
-          );
-        })}
-      </ul>
-    </div>
+    <table>
+      {forecastInfo.forecastday.map((info) => {
+        return (
+          <tr key={info.date}>
+            <td>{info.date}</td>
+            <td>
+              <img src={info.day.condition.icon}></img>
+            </td>
+            <td>
+              {info.day.mintemp_c} / {info.day.maxtemp_c} °C
+            </td>
+            <td className="text">{info.day.condition.text}</td>
+          </tr>
+        );
+      })}
+    </table>
   );
 }

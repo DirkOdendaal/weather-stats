@@ -4,7 +4,7 @@ import "../css/LocationStats.css";
 export default function WeatherStats() {
   console.log();
   return (
-    <div>
+    <div className="stats-container">
       <ul></ul>
     </div>
   );

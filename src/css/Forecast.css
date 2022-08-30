@@ -1,20 +1,25 @@
-.inline-records div {
-  display: inline-block;
-  padding: 5px;
-  justify-content: space-evenly;
-}
-.record-list {
-  list-style: none;
-}
-.record-list li {
-  list-style: none;
-  display: inline-block;
-  width: 150px;
-  padding: 8px;
+table {
+  padding: 10px;
+  border-collapse: collapse;
+  background-color: white;
+  text-align: left;
+  max-width: 400px;
+  min-width: 400px;
 }
 
-.forecast-container {
-  list-style: none;
-  max-width: 500px;
-  min-width: 500px;
+table img {
+  height: 30px;
+  width: 30px;
+}
+
+table tr {
+  border: none;
+  transition: transform 0.2s;
+  cursor: default;
+}
+
+table tr:hover {
+  background-color: #bdbdbd;
+  border-radius: 10px;
+  transform: scale(1.02);
 }

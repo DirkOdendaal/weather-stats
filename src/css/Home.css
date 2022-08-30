@@ -1,6 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Lato&display=swap");
 
 body {
+  font-family: "Lato", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -13,14 +16,9 @@ body {
   justify-content: space-evenly;
 }
 
-@import url("https://fonts.googleapis.com/css2?family=Lato&display=swap");
-
 li,
 a,
 button {
-  font-family: "Lato", sans-serif;
-  font-weight: 400;
-  font-size: 16px;
   color: whitesmoke;
   text-decoration: none;
 }
@@ -71,4 +69,3 @@ button {
 button:hover {
   background-color: rgba(0, 136, 169, 0.8);
 }
-

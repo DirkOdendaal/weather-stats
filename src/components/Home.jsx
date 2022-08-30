@@ -23,12 +23,11 @@ export default function Home() {
 
   useEffect(() => {
     getCurrentLocation({ setLatLng, setLocationName });
-    getForecastInfo({ locationName, setForecastInfo, setWeatherInfo });
   }, []);
 
   useEffect(() => {
-    getForecastInfo({locationName,setForecastInfo,setWeatherInfo})
-  }, [locationName])
+    getForecastInfo({ locationName, setForecastInfo, setWeatherInfo });
+  }, [locationName]);
 
   if (!isLoaded.isLoaded) return <div>Loading..</div>;
 
