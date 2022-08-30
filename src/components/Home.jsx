@@ -26,10 +26,12 @@ export default function Home() {
     getForecastInfo({ locationName, setForecastInfo, setWeatherInfo });
   }, []);
 
-  if (!isLoaded) {
-    return <div>Loading...</div>;
-  }
-  // console.log("Here");
+  useEffect(() => {
+    getForecastInfo({locationName,setForecastInfo,setWeatherInfo})
+  }, [locationName])
+
+  if (!isLoaded.isLoaded) return <div>Loading..</div>;
+
   return (
     <>
       <header>
@@ -49,6 +51,7 @@ export default function Home() {
               setLocationName={setLocationName}
               setLatLng={setLatLng}
               setWeatherInfo={setWeatherInfo}
+              setForecastInfo={setForecastInfo}
               locationName={locationName}
               isLoaded={isLoaded}
             ></Search>
@@ -88,15 +91,14 @@ function getCurrentLocation({ setLatLng, setLocationName }) {
 
 function getLocationName({ pos, setLocationName }) {
   let geocoder = new window.google.maps.Geocoder();
-  if (geocoder != null)
-    geocoder
-      .geocode({ location: pos })
-      .then((response) => {
-        if (response.results[0]) {
-          setLocationName(response.results[0].formatted_address);
-        } else {
-          window.alert("no result");
-        }
-      })
-      .catch((e) => console.log("Geocoder failed due to: " + e));
+  geocoder
+    .geocode({ location: pos })
+    .then((response) => {
+      if (response.results[0]) {
+        setLocationName(response.results[0].formatted_address);
+      } else {
+        window.alert("no result");
+      }
+    })
+    .catch((e) => console.log("Geocoder failed due to: " + e));
 }

@@ -1,0 +1,20 @@
+.inline-records div {
+  display: inline-block;
+  padding: 5px;
+  justify-content: space-evenly;
+}
+.record-list {
+  list-style: none;
+}
+.record-list li {
+  list-style: none;
+  display: inline-block;
+  width: 150px;
+  padding: 8px;
+}
+
+.forecast-container {
+  list-style: none;
+  max-width: 500px;
+  min-width: 500px;
+}

@@ -11,15 +11,8 @@ import {
   ComboboxOption,
 } from "@reach/combobox";
 import "@reach/combobox/styles.css";
-import { getForecastInfo } from "../js/Weather";
 
-export default function Search({
-  setLocationName,
-  setLatLng,
-  setWeatherInfo,
-  locationName,
-  isLoaded,
-}) {
+export default function Search({ setLocationName, setLatLng, isLoaded }) {
   if (!isLoaded)
     return (
       <li>
@@ -29,38 +22,21 @@ export default function Search({
 
   return (
     <li>
-      <SearchAddress
-        setLocationName={setLocationName}
-        setLatLng={setLatLng}
-        setWeatherInfo={setWeatherInfo}
-        locationName={locationName}
-      />
+      <SearchAddress setLocationName={setLocationName} setLatLng={setLatLng} />
     </li>
   );
 }
 
-function SearchAddress({
-  setLocationName,
-  setLatLng,
-  setWeatherInfo,
-  locationName,
-}) {
+function SearchAddress({ setLocationName, setLatLng }) {
   return (
     <PlacesAutocomplete
       setLocationName={setLocationName}
       setLatLng={setLatLng}
-      setWeatherInfo={setWeatherInfo}
-      locationName={locationName}
     />
   );
 }
 
-const PlacesAutocomplete = ({
-  setLocationName,
-  setLatLng,
-  setWeatherInfo,
-  locationName,
-}) => {
+const PlacesAutocomplete = ({ setLocationName, setLatLng }) => {
   const {
     ready,
     value,
@@ -76,7 +52,6 @@ const PlacesAutocomplete = ({
     const results = await getGeocode({ address });
     setLocationName(address);
     setLatLng(getLatLng(results[0]));
-    getForecastInfo({ locationName, setWeatherInfo });
   };
 
   return (
