@@ -1,12 +1,10 @@
 import React from "react";
 
-export default class WeatherStats extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
-  render() {
-    return <div>Weather Stats</div>;
-  }
+export default function WeatherStats() {
+  console.log();
+  return (
+    <div>
+      <ul></ul>
+    </div>
+  );
 }

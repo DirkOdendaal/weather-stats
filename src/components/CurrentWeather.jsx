@@ -30,7 +30,7 @@ export default function Weather({ locationName, weatherInfo }) {
       <div className="detail-div">
         <ul className="weather-container-li">
           <li id="wind">
-            Wind: {weatherInfo.wind_kph} /kph {weatherInfo.wind_dir}
+            Wind: {weatherInfo.wind_kph} Km/h {weatherInfo.wind_dir}
           </li>
           <li id="pressure">Presure: {weatherInfo.pressure_mb}hPa</li>
         </ul>

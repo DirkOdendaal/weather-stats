@@ -1,18 +1,12 @@
 import React from "react";
 import "../css/Map.css";
-import { GoogleMap, useLoadScript, Marker, } from "@react-google-maps/api";
 
-export default function Map({ newcoords }) {
-  const { isLoaded } = useLoadScript({
-    googleMapsApiKey: "AIzaSyCPrLDWy7O8v0kS-r0y01REB1H10l332gQ",
-    libraries: ["places"],
-  });
-
+export default function Map({ newcoords, isLoaded, GoogleMap }) {
   if (!isLoaded) return <div>Loading ...</div>;
-  return <DrawMap newcoords={newcoords}></DrawMap>;
+  return <DrawMap newcoords={newcoords} GoogleMap={GoogleMap}></DrawMap>;
 }
 
-function DrawMap({ newcoords }) {
+function DrawMap({ newcoords, GoogleMap }) {
   return (
     <GoogleMap
       id="map"
@@ -24,8 +18,6 @@ function DrawMap({ newcoords }) {
         mapTypeId: "terrain",
       }}
       mapContainerClassName="map-container"
-    >
-      {/* <Marker position={coords}></Marker> */}
-    </GoogleMap>
+    ></GoogleMap>
   );
 }

@@ -1,4 +1,3 @@
-import { useLoadScript } from "@react-google-maps/api";
 import "../css/Search.css";
 import usePlacesAutocomplete, {
   getGeocode,
@@ -12,19 +11,15 @@ import {
   ComboboxOption,
 } from "@reach/combobox";
 import "@reach/combobox/styles.css";
-import $ from "jquery";
+import { getForecastInfo } from "../js/Weather";
 
 export default function Search({
   setLocationName,
   setLatLng,
   setWeatherInfo,
   locationName,
+  isLoaded,
 }) {
-  const { isLoaded } = useLoadScript({
-    googleMapsApiKey: "AIzaSyCPrLDWy7O8v0kS-r0y01REB1H10l332gQ",
-    libraries: ["places"],
-  });
-
   if (!isLoaded)
     return (
       <li>
@@ -79,10 +74,9 @@ const PlacesAutocomplete = ({
     clearSuggestions();
 
     const results = await getGeocode({ address });
-    console.log(address);
     setLocationName(address);
     setLatLng(getLatLng(results[0]));
-    getWeatherInfo({ locationName, setWeatherInfo });
+    getForecastInfo({ locationName, setWeatherInfo });
   };
 
   return (
@@ -109,16 +103,3 @@ const PlacesAutocomplete = ({
     </Combobox>
   );
 };
-
-function getWeatherInfo({ locationName, setWeatherInfo }) {
-  if (locationName !== null || locationName !== undefined) {
-    $.ajax({
-      url: `https://api.weatherapi.com/v1/current.json?key=d6059cb8972940258c182934222908&q=${locationName}&aqi=no`,
-      type: "GET",
-      success: function (result) {
-        setWeatherInfo(result.current);
-        console.log(result.current);
-      },
-    });
-  }
-}
