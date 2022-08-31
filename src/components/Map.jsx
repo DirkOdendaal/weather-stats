@@ -1,16 +1,21 @@
 import React from "react";
 import "../css/Map.css";
 
-export default function Map({ newcoords, isLoaded, GoogleMap }) {
-  
-  return <DrawMap newcoords={newcoords} GoogleMap={GoogleMap}></DrawMap>;
+export default function Map({ newcoords, GoogleMap, Marker }) {
+  return (
+    <DrawMap
+      newcoords={newcoords}
+      GoogleMap={GoogleMap}
+      Marker={Marker}
+    ></DrawMap>
+  );
 }
 
-function DrawMap({ newcoords, GoogleMap }) {
+function DrawMap({ newcoords, GoogleMap, Marker }) {
   return (
     <GoogleMap
       id="map"
-      zoom={12}
+      zoom={8}
       center={newcoords}
       options={{
         mapTypeControl: false,
@@ -18,6 +23,8 @@ function DrawMap({ newcoords, GoogleMap }) {
         mapTypeId: "terrain",
       }}
       mapContainerClassName="map-container"
-    ></GoogleMap>
+    >
+      <Marker position={newcoords} />
+    </GoogleMap>
   );
 }

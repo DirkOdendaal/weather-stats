@@ -1,10 +1,9 @@
 table {
-  padding: 10px;
   border-collapse: collapse;
-  background-color: white;
+  padding: 10px;
   text-align: left;
-  max-width: 400px;
-  min-width: 400px;
+  max-width: 500px;
+  min-width: 500px;
 }
 
 table img {
@@ -13,13 +12,17 @@ table img {
 }
 
 table tr {
-  border: none;
   transition: transform 0.2s;
+  color: white;
   cursor: default;
 }
 
+table td {
+  border: none;
+}
+
 table tr:hover {
-  background-color: #bdbdbd;
-  border-radius: 10px;
+  background-color: white;
+  color: rgb(64, 65, 64);
   transform: scale(1.02);
 }

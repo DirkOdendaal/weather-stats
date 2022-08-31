@@ -1,10 +1,10 @@
-import { GoogleMap, useLoadScript } from "@react-google-maps/api";
+import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
 import { useState, useEffect } from "react";
 import CurrentWeather from "./CurrentWeather";
 import Map from "./Map";
 import "../css/Home.css";
 import Forecast from "./Forecast";
-import WeatherStats from "./LocationStats";
+import WeatherStats from "./WeatherStats";
 import Search from "./Search";
 import logo from "../resources/weather-icon.png";
 import { getForecastInfo } from "../js/Weather";
@@ -68,11 +68,12 @@ export default function Home() {
           newcoords={newcoords}
           isLoaded={isLoaded}
           GoogleMap={GoogleMap}
+          Marker={Marker}
         ></Map>
       </div>
       <div className="middle-container">
         <Forecast forecastInfo={forecastInfo}></Forecast>
-        <WeatherStats></WeatherStats>
+        <WeatherStats forecastInfo={forecastInfo}></WeatherStats>
       </div>
     </>
   );
