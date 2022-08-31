@@ -1,10 +1,9 @@
 import { useState, useEffect } from "react";
 import "../css/WeatherStats.css";
 import { Line } from "react-chartjs-2";
-import { Chart as ChartJS } from "chart.js/auto"; //Keep import for Chart.js and temp Chart
-import { TbTemperatureCelsius } from "react-icons/tb";
+import { Chart as ChartJS } from "chart.js/auto"; //Keep import for Chart.js and Temp. Chart
 
-export default function WeatherStats({ forecastInfo }) {
+export default function WeatherStats({ weatherStats, selectedDay }) {
   const [data, setData] = useState({
     labels: [],
     datasets: [],
@@ -12,11 +11,18 @@ export default function WeatherStats({ forecastInfo }) {
 
   useEffect(() => {
     setData({
-      labels: forecastInfo.forecastday[0].hour.map((time) => time.time),
+      labels: weatherStats[selectedDay].hour.map((time) => {
+        var newTime = new Date(time.time);
+        newTime = newTime.toLocaleTimeString("en-GB", {
+          hour: "2-digit",
+          minute: "2-digit",
+        });
+        return newTime;
+      }),
       datasets: [
         {
           label: "Hourly Temperature",
-          data: forecastInfo.forecastday[0].hour.map((temp_c) => temp_c.temp_c),
+          data: weatherStats[selectedDay].hour.map((temp_c) => temp_c.temp_c),
           borderColor: "white",
           backgroundColor: "white",
           tension: 0.5,
@@ -24,7 +30,9 @@ export default function WeatherStats({ forecastInfo }) {
         },
       ],
     });
-  }, [forecastInfo]);
+  }, [weatherStats]);
+
+  useEffect(() => {}, [weatherStats]);
 
   return (
     <div className="stats-container">

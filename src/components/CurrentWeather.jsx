@@ -2,15 +2,14 @@ import React, { useEffect, useState } from "react";
 import "../css/CurrentWeather.css";
 import { FaArrowUp } from "react-icons/fa";
 import { TbTemperatureCelsius, TbPercentage } from "react-icons/tb";
+const dateOptions = { weekday: "short", day: "numeric", month: "short" };
 
 export default function Weather({ locationName, weatherInfo }) {
   const [clockState, setClockState] = useState();
 
   useEffect(() => {
-    setInterval(() => {
-      const date = new Date();
-      setClockState(date.toLocaleString());
-    }, 1000);
+    const date = new Date();
+    setClockState(date.toLocaleString("en-US", dateOptions));
   }, []);
   // const description = weatherInfo.condition.text;
   return (

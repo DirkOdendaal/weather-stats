@@ -1,6 +1,7 @@
 import React from "react";
 import "../css/Forecast.css";
 import { TbTemperatureCelsius } from "react-icons/tb";
+const dateOptions = { weekday: "short", day: "numeric", month: "short" };
 
 export default function Forecast({ forecastInfo }) {
   if (forecastInfo.length === 0 && forecastInfo.forecastday !== undefined) {
@@ -9,10 +10,12 @@ export default function Forecast({ forecastInfo }) {
   return (
     <table>
       <tbody>
-        {forecastInfo.forecastday.map((info) => {
+        {forecastInfo.forecastday.map((info, index) => {
+          var date = new Date(info.date);
+          date = date.toLocaleString("en-US", dateOptions);
           return (
-            <tr key={info.date}>
-              <td>{info.date}</td>
+            <tr key={index}>
+              <td>{date}</td>
               <td>
                 <img src={info.day.condition.icon}></img>
               </td>

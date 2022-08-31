@@ -23,6 +23,7 @@ table td {
 
 table tr:hover {
   background-color: white;
+  border-color: white;
   color: rgb(64, 65, 64);
   transform: scale(1.02);
 }

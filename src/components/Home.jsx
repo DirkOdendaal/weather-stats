@@ -12,22 +12,29 @@ import { getForecastInfo } from "../js/Weather";
 const libraries = ["places"];
 
 export default function Home() {
+  const [selectedDay, setSelectedDay] = useState();
   const [locationName, setLocationName] = useState(null);
   const [newcoords, setLatLng] = useState({});
   const [weatherInfo, setWeatherInfo] = useState({});
   const [forecastInfo, setForecastInfo] = useState({});
+  const [weatherStats, setWeatherStats] = useState();
   const isLoaded = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_KEY,
     libraries,
   });
 
   useEffect(() => {
+    setSelectedDay(0);
     getCurrentLocation({ setLatLng, setLocationName });
   }, []);
 
   useEffect(() => {
     getForecastInfo({ locationName, setForecastInfo, setWeatherInfo });
   }, [locationName]);
+
+  useEffect(() => {
+    setWeatherStats(forecastInfo.forecastday);
+  }, [forecastInfo]);
 
   if (!isLoaded.isLoaded) return <div>Loading..</div>;
 
@@ -73,7 +80,10 @@ export default function Home() {
       </div>
       <div className="middle-container">
         <Forecast forecastInfo={forecastInfo}></Forecast>
-        <WeatherStats forecastInfo={forecastInfo}></WeatherStats>
+        <WeatherStats
+          weatherStats={weatherStats}
+          selectedDay={selectedDay}
+        ></WeatherStats>
       </div>
     </>
   );
