@@ -2,6 +2,7 @@
   list-style: none;
   max-width: 500px;
   min-width: 500px;
+  padding: 10px;
 }
 
 .detail-div {
@@ -10,13 +11,14 @@
 
 .weather-container-li {
   display: flex;
+  flex-grow: 100;
 }
 
 .weather-container-li li {
   list-style: none;
   display: inline-block;
-  width: 150px;
-  padding: 8px
+  max-width: 150px;
+  padding: 8px;
 }
 
 ul {
