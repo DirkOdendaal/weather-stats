@@ -1,4 +1,5 @@
 import "../css/Search.css";
+import React from "react";
 import usePlacesAutocomplete, {
   getGeocode,
   getLatLng,

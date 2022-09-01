@@ -1,5 +1,5 @@
 import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import CurrentWeather from "./CurrentWeather";
 import Map from "./Map";
 import "../css/Home.css";
@@ -8,15 +8,16 @@ import WeatherStats from "./WeatherStats";
 import Search from "./Search";
 import logo from "../resources/weather-icon.png";
 import { getForecastInfo } from "../js/Weather";
+import Geocoder from "react-geocode";
 
 const libraries = ["places"];
 
 export default function Home() {
+  const [locationName, setLocationName] = useState();
   const [selectedDay, setSelectedDay] = useState();
-  const [locationName, setLocationName] = useState(null);
-  const [newcoords, setLatLng] = useState({});
+  const [newcoords, setLatLng] = useState();
   const [weatherInfo, setWeatherInfo] = useState({});
-  const [forecastInfo, setForecastInfo] = useState({});
+  const [forecastInfo, setForecastInfo] = useState();
   const [weatherStats, setWeatherStats] = useState();
   const isLoaded = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_KEY,
@@ -29,11 +30,15 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    getForecastInfo({ locationName, setForecastInfo, setWeatherInfo });
+    if (locationName) {
+      getForecastInfo({ locationName, setForecastInfo, setWeatherInfo });
+    }
   }, [locationName]);
 
   useEffect(() => {
-    setWeatherStats(forecastInfo.forecastday);
+    if (forecastInfo) {
+      setWeatherStats(forecastInfo.forecastday);
+    }
   }, [forecastInfo]);
 
   if (!isLoaded.isLoaded) return <div>Loading..</div>;
@@ -41,11 +46,11 @@ export default function Home() {
   return (
     <>
       <header>
-        <img className="logo" src={logo}></img>
+        <img className="logo" src={logo} alt=""></img>
         <nav>
           <ul className="nav_links">
             <li>
-              <a href="#">Item</a>
+              <a href="#">Item </a>
             </li>
             <li>
               <a href="#">Item</a>
@@ -95,20 +100,26 @@ function getCurrentLocation({ setLatLng, setLocationName }) {
       const pos = { lat, lng };
       setLatLng(pos);
       getLocationName({ pos, setLocationName });
-    }
+    },
+    (error) => {
+      window.alert(`Failed Geolocation : ${error}`);
+    },
+    { enableHighAccuracy: true }
   );
 }
 
 function getLocationName({ pos, setLocationName }) {
-  let geocoder = new window.google.maps.Geocoder();
-  geocoder
-    .geocode({ location: pos })
-    .then((response) => {
-      if (response.results[0]) {
+  if (pos !== null)
+    Geocoder.fromLatLng(
+      pos.lat,
+      pos.lng,
+      process.env.REACT_APP_GOOGLE_KEY
+    ).then(
+      (response) => {
         setLocationName(response.results[0].formatted_address);
-      } else {
-        window.alert("no result");
+      },
+      (error) => {
+        window.alert(error);
       }
-    })
-    .catch((e) => console.log("Geocoder failed due to: " + e));
+    );
 }
