@@ -84,7 +84,7 @@ export default function Home() {
         ></Map>
       </div>
       <div className="middle-container">
-        <Forecast forecastInfo={forecastInfo}></Forecast>
+        <Forecast forecastInfo={forecastInfo} setSelectedDay={setSelectedDay}></Forecast>
         <WeatherStats
           weatherStats={weatherStats}
           selectedDay={selectedDay}

@@ -3,8 +3,7 @@ import "../css/Forecast.css";
 import { TbTemperatureCelsius } from "react-icons/tb";
 const dateOptions = { weekday: "short", day: "numeric", month: "short" };
 
-export default function Forecast({ forecastInfo }) {
- 
+export default function Forecast({ forecastInfo, setSelectedDay }) {
   return (
     <table>
       <tbody>
@@ -12,7 +11,7 @@ export default function Forecast({ forecastInfo }) {
           var date = new Date(info.date);
           date = date.toLocaleString("en-US", dateOptions);
           return (
-            <tr key={index}>
+            <tr key={index} onClick={() => setSelectedDay(index)}>
               <td>{date}</td>
               <td>
                 <img src={info.day.condition.icon}></img>

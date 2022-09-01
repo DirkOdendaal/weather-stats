@@ -12,7 +12,7 @@ export default function WeatherStats({ weatherStats, selectedDay }) {
   useEffect(() => {
     if (weatherStats) {
       setData({
-        labels: weatherStats[0]?.hour.map((time) => {
+        labels: weatherStats[selectedDay]?.hour.map((time) => {
           var newTime = new Date(time.time);
           newTime = newTime.toLocaleTimeString("en-GB", {
             hour: "2-digit",
@@ -23,7 +23,7 @@ export default function WeatherStats({ weatherStats, selectedDay }) {
         datasets: [
           {
             label: "Hourly Temperature",
-            data: weatherStats[0].hour.map((temp_c) => temp_c.temp_c),
+            data: weatherStats[selectedDay].hour.map((temp_c) => temp_c.temp_c),
             borderColor: "white",
             backgroundColor: "white",
             tension: 0.5,
