@@ -1,12 +1,13 @@
 .weather-container {
   list-style: none;
   max-width: 500px;
-  min-width: 500px;
+  min-width: 350px;
   padding: 10px;
 }
 
 .detail-div {
   border-left: 3px solid rgba(0, 136, 169, 1);
+  margin-left: 20px;
 }
 
 .weather-container-li {
