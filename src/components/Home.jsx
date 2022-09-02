@@ -1,10 +1,6 @@
 import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
 import React, { useState, useEffect } from "react";
 import CurrentWeather from "./CurrentWeather";
-import usePlacesAutocomplete, {
-  getGeocode,
-  getLatLng,
-} from "use-places-autocomplete";
 import Map from "./Map";
 import "../css/Home.css";
 import Forecast from "./Forecast";
@@ -14,6 +10,7 @@ import logo from "../resources/weather-icon.png";
 import { getForecastInfo } from "../js/Weather";
 import Geocoder from "react-geocode";
 import axios from "axios";
+import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
 
 const libraries = ["places"];
 
@@ -50,53 +47,64 @@ export default function Home() {
 
   return (
     <>
-      <header>
-        <img className="logo" src={logo} alt=""></img>
-        <nav>
-          <ul className="nav_links">
-            <li>
-              <a href="#">Dashboard </a>
-            </li>
-            <li>
-              <a href="#">Item</a>
-            </li>
-            <li>
-              <a href="#">Item</a>
-            </li>
-            <Search
-              setLocationName={setLocationName}
-              setLatLng={setLatLng}
-              setWeatherInfo={setWeatherInfo}
-              setForecastInfo={setForecastInfo}
-              locationName={locationName}
-              isLoaded={isLoaded}
-            ></Search>
-          </ul>
-        </nav>
-        {/* <a className="cta" href="#"><button>Search</button></a> */}
-      </header>
-      <div className="middle-container">
-        <CurrentWeather
-          locationName={locationName}
-          weatherInfo={weatherInfo}
-        ></CurrentWeather>
-        <Map
-          newcoords={newcoords}
-          isLoaded={isLoaded}
-          GoogleMap={GoogleMap}
-          Marker={Marker}
-        ></Map>
-      </div>
-      <div className="middle-container">
-        <Forecast
-          forecastInfo={forecastInfo}
-          setSelectedDay={setSelectedDay}
-        ></Forecast>
-        <WeatherStats
-          weatherStats={weatherStats}
-          selectedDay={selectedDay}
-        ></WeatherStats>
-      </div>
+      <BrowserRouter>
+        <header>
+          <img className="logo" src={logo} alt=""></img>
+          <nav>
+            <ul className="nav_links">
+              <li>
+                <Link to="weather-stats/">Dashboard</Link>
+              </li>
+              <li>
+                <a href="#">Item</a>
+              </li>
+              <li>
+                <a href="#">Item</a>
+              </li>
+              <Search
+                setLocationName={setLocationName}
+                setLatLng={setLatLng}
+                setWeatherInfo={setWeatherInfo}
+                setForecastInfo={setForecastInfo}
+                locationName={locationName}
+                isLoaded={isLoaded}
+              ></Search>
+            </ul>
+          </nav>
+          {/* <a className="cta" href="#"><button>Search</button></a> */}
+        </header>
+        <Routes>
+          <Route
+            path="weather-stats/"
+            element={
+              <>
+                <div className="middle-container">
+                  <CurrentWeather
+                    locationName={locationName}
+                    weatherInfo={weatherInfo}
+                  ></CurrentWeather>
+                  <Map
+                    newcoords={newcoords}
+                    isLoaded={isLoaded}
+                    GoogleMap={GoogleMap}
+                    Marker={Marker}
+                  ></Map>
+                </div>
+                <div className="middle-container">
+                  <Forecast
+                    forecastInfo={forecastInfo}
+                    setSelectedDay={setSelectedDay}
+                  ></Forecast>
+                  <WeatherStats
+                    weatherStats={weatherStats}
+                    selectedDay={selectedDay}
+                  ></WeatherStats>
+                </div>
+              </>
+            }
+          />
+        </Routes>
+      </BrowserRouter>
     </>
   );
 }

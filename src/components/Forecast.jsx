@@ -6,7 +6,7 @@ const dateOptions = { weekday: "short", day: "numeric", month: "short" };
 export default function Forecast({ forecastInfo, setSelectedDay }) {
   return (
     <table>
-      <tbody>
+      <tbody id="style-1">
         {forecastInfo?.forecastday?.map((info, index) => {
           var date = new Date(info.date);
           date = date.toLocaleString("en-US", dateOptions);

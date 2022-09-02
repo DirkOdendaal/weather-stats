@@ -3,7 +3,7 @@ import "../css/Map.css";
 
 export default function Map({ newcoords, GoogleMap, Marker }) {
   if (newcoords == null) {
-    return <div>Loading ..</div>
+    return <div>Loading ..</div>;
   }
   return (
     <DrawMap
