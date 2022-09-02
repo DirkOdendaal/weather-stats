@@ -1,6 +1,10 @@
 import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import CurrentWeather from "./CurrentWeather";
+import usePlacesAutocomplete, {
+  getGeocode,
+  getLatLng,
+} from "use-places-autocomplete";
 import Map from "./Map";
 import "../css/Home.css";
 import Forecast from "./Forecast";
@@ -9,6 +13,7 @@ import Search from "./Search";
 import logo from "../resources/weather-icon.png";
 import { getForecastInfo } from "../js/Weather";
 import Geocoder from "react-geocode";
+import axios from "axios";
 
 const libraries = ["places"];
 
@@ -50,7 +55,7 @@ export default function Home() {
         <nav>
           <ul className="nav_links">
             <li>
-              <a href="#">Item </a>
+              <a href="#">Dashboard </a>
             </li>
             <li>
               <a href="#">Item</a>
@@ -70,7 +75,6 @@ export default function Home() {
         </nav>
         {/* <a className="cta" href="#"><button>Search</button></a> */}
       </header>
-
       <div className="middle-container">
         <CurrentWeather
           locationName={locationName}
@@ -84,7 +88,10 @@ export default function Home() {
         ></Map>
       </div>
       <div className="middle-container">
-        <Forecast forecastInfo={forecastInfo} setSelectedDay={setSelectedDay}></Forecast>
+        <Forecast
+          forecastInfo={forecastInfo}
+          setSelectedDay={setSelectedDay}
+        ></Forecast>
         <WeatherStats
           weatherStats={weatherStats}
           selectedDay={selectedDay}
@@ -95,17 +102,45 @@ export default function Home() {
 }
 
 function getCurrentLocation({ setLatLng, setLocationName }) {
-  navigator?.geolocation.getCurrentPosition(
-    ({ coords: { latitude: lat, longitude: lng } }) => {
-      const pos = { lat, lng };
+  if (navigator?.geolocation) {
+    navigator.permissions
+      .query({ name: "geolocation" })
+      .then(function (result) {
+        if (result.state === "granted") {
+          navigator.geolocation.getCurrentPosition(
+            ({ coords: { latitude: lat, longitude: lng } }) => {
+              const pos = { lat, lng };
+              setLatLng(pos);
+              getLocationName({ pos, setLocationName });
+            },
+            (error) => {
+              window.alert(`Failed Geolocation : ${error}`);
+            },
+            { enableHighAccuracy: true }
+          );
+        } else if (result.state === "denied") {
+          getGeoInfo({ setLatLng, setLocationName });
+          window.alert(
+            "Location Tracking Disabled. Please enable browser location permissions for best experience."
+          );
+        }
+      });
+  }
+}
+
+function getGeoInfo({ setLatLng, setLocationName }) {
+  axios
+    .get("https://ipapi.co/json/")
+    .then((response) => {
+      let data = response.data;
+      console.log(data);
+      const pos = { lat: data.latitude, lng: data.longitude };
+      setLocationName(data.city);
       setLatLng(pos);
-      getLocationName({ pos, setLocationName });
-    },
-    (error) => {
-      window.alert(`Failed Geolocation : ${error}`);
-    },
-    { enableHighAccuracy: true }
-  );
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 }
 
 function getLocationName({ pos, setLocationName }) {

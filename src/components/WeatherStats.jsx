@@ -22,7 +22,7 @@ export default function WeatherStats({ weatherStats, selectedDay }) {
         }),
         datasets: [
           {
-            label: "Hourly Temperature",
+            label: `Hourly Temp.`,
             data: weatherStats[selectedDay].hour.map((temp_c) => temp_c.temp_c),
             borderColor: "white",
             backgroundColor: "white",

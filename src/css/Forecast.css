@@ -15,7 +15,7 @@ table img {
 table tr {
   transition: transform 0.2s;
   color: white;
-  cursor: default;
+  cursor: pointer;
 }
 
 table td {
