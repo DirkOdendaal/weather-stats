@@ -17,8 +17,8 @@ export default function Forecast({ forecastInfo, setSelectedDay }) {
                 <img src={info.day.condition.icon}></img>
               </td>
               <td>
-                {info.day.mintemp_c} / {info.day.maxtemp_c}{" "}
-                <TbTemperatureCelsius></TbTemperatureCelsius>
+                <TbTemperatureCelsius></TbTemperatureCelsius>{" "}
+                {info.day.mintemp_c} / {info.day.maxtemp_c}
               </td>
               <td className="text">{info.day.condition.text}</td>
             </tr>
